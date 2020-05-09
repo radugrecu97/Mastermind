@@ -1,8 +1,0 @@
-//
-// Created by radugrecu97 on 5/9/20.
-//
-
-#ifndef MASTERMIND_ISETTINGSMANAGER_H
-#define MASTERMIND_ISETTINGSMANAGER_H
-
-#endif //MASTERMIND_ISETTINGSMANAGER_H
