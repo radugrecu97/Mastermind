@@ -11,5 +11,5 @@ target_include_directories(settings_manager
         include/
         )
 
-target_link_libraries(settings_manager LINK_PUBLIC settings_manager_api)
+target_link_libraries(settings_manager LINK_PUBLIC settings_manager_api constants)
 

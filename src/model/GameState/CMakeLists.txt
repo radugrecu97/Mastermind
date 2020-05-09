@@ -11,6 +11,6 @@ target_include_directories(game_state
         include/
         )
 
-target_link_libraries(game_state PUBLIC game_state_api)
+target_link_libraries(game_state PUBLIC game_state_api util constants)
 
 

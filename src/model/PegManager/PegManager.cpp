@@ -4,26 +4,33 @@
 
 #include <PegManager.h>
 #include <Util.h>
-
+#include <bits/unique_ptr.h>
+#include <error_codes.h>
 
 PegManager::PegManager() = default;
 
 int8_t PegManager::replaceCodePeg(std::string oldColor, std::string newColor) {
-    //  validate that the color to be replaced exists in the set
+
+    //  check if old color exists in the set
     if (this->codePegs.find(oldColor) == this->codePegs.end()) {
         // color to be replaced isn't part of the set
-        return -1;
+        return codes::INVALID_INPUT;
     }
 
-    //  validate that the new color exists in the set
+    // check if new color is valid
+    std::unique_ptr<IUtil> util(new Util());
+    if (util->validateUpperLetters(newColor) == codes::INVALID_INPUT)
+        return codes::INVALID_INPUT;
+
+    //  check if new color exists in the set already
     if (this->codePegs.find(newColor) == this->codePegs.end()) {
         // new color doesn't exist
         this->codePegs.erase(oldColor);
         this->codePegs.insert(newColor);
-        return 1;
+        return codes::SUCCESS;
     } else {
         // new color already present
-        return 0;
+        return codes::DUPLICATE_DATA;
     }
 }
 
@@ -31,68 +38,68 @@ int8_t PegManager::setCodePegs(std::set<std::string> colorSet) {
 
     // 6 according to the rules
     if (colorSet.size() != 6) {
-        return -1;
+        return codes::INVALID_SIZE;
     }
 
-    IUtil *util = new Util();
+    std::unique_ptr<IUtil> util(new Util());
 
     // check if colors are vaild
-    for(auto f : colorSet) {
-        if (util->validateUpperLetters(f) == -1)
+    for(const auto& c : colorSet) {
+        if (util->validateUpperLetters(c) == codes::INVALID_INPUT)
             // invalid color
-            return 0;
+            return codes::INVALID_INPUT;
     }
 
     this->codePegs = colorSet;
 
-    return 1;
+    return codes::SUCCESS;
 }
 
 int8_t PegManager::setKeyPegColor(std::string color) {
-    IUtil *util = new Util();
+    std::unique_ptr<IUtil> util(new Util());
 
     // a "color" must only be represented by Uppercase Letters
-    if (util->validateUpperLetters(color) == -1)
+    if (util->validateUpperLetters(color) == codes::INVALID_INPUT)
     {
         // color is invalid
-        return -1;
+        return codes::INVALID_INPUT;
     }
 
     // check if the other key peg already has this color
     if (this->keyPegPosition == color)
     {
         // color is taken
-        return 0;
+        return codes::DUPLICATE_DATA;
     }
     else {
         // color is not taken
         this->keyPegColor = color;
-        return 1;
+        return codes::SUCCESS;
     }
 
 }
 
 
 int8_t PegManager::setKeyPegPosition(std::string color) {
-    IUtil *util = new Util();
+    std::unique_ptr<IUtil> util(new Util());
 
     // a "color" must only be represented by Uppercase Letters
-    if (util->validateUpperLetters(color) == -1)
+    if (util->validateUpperLetters(color) == codes::INVALID_INPUT)
     {
         // color is invalid
-        return -1;
+        return codes::INVALID_INPUT;
     }
 
     // check if the other key peg already has this color
     if (this->keyPegColor == color)
     {
         // color is taken
-        return 0;
+        return codes::DUPLICATE_DATA;
     }
     else {
         // color is not taken
         this->keyPegPosition = color;
-        return 1;
+        return codes::SUCCESS;
     }
 }
 

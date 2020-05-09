@@ -1,3 +1,5 @@
+
+
 //
 // Created by radugrecu97 on 5/6/20.
 //
@@ -9,24 +11,27 @@
 #include <Util.h>
 #include <ISettingsManager.h>
 #include <SettingsManager.h>
+#include <IGameState.h>
+#include <GameState.h>
+#include <error_codes.h>
 
 // ************************************ Util ************************************
 
 // validateUpperLetters
 TEST(UtilTestSuite, VALIDATE_UPPER_LETTERS_SUCCESS) {
     // init
-    IUtil *util = new Util();
+    std::unique_ptr<IUtil> util(new Util());
 
     int8_t result = util->validateUpperLetters("A");
-    ASSERT_EQ(result, 1);
+    ASSERT_EQ(result, codes::SUCCESS);
 }
 
-TEST(UtilTestSuite, VALIDATE_UPPER_LETTERS_FAIL) {
+TEST(UtilTestSuite, VALIDATE_UPPER_LETTERS_FAIL_INVALID) {
     // init
-    IUtil *util = new Util();
+    std::unique_ptr<IUtil> util(new Util());
 
     int8_t result = util->validateUpperLetters("*");
-    ASSERT_EQ(result, -1);
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
 // ************************************ PegManager ************************************
@@ -35,138 +40,148 @@ TEST(UtilTestSuite, VALIDATE_UPPER_LETTERS_FAIL) {
 
 TEST(PegManagerTestSuite, SET_CODE_PEGS_SUCCESS) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
 
     int8_t result = pegManager->setCodePegs(colorSet);
-    ASSERT_EQ(result, 1);
+    ASSERT_EQ(result, codes::SUCCESS);
 }
 
 TEST(PegManagerTestSuite, SET_CODE_PEGS_FAIL_SIZE) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "B"};
 
     int8_t result = pegManager->setCodePegs(colorSet);
-    ASSERT_EQ(result, -1);
+    ASSERT_EQ(result, codes::INVALID_SIZE);
 }
 
 TEST(PegManagerTestSuite, SET_CODE_PEGS_FAIL_INVALID) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "*"};
 
     int8_t result = pegManager->setCodePegs(colorSet);
-    ASSERT_EQ(result, 0);
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
 // setKeyPegColor
 
 TEST(PegManagerTestSuite, SET_KEY_PEG_COLOR_SUCCESS) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     std::string keyPegPosition = "B";
     pegManager->setKeyPegPosition(keyPegPosition);
 
     int8_t result = pegManager->setKeyPegColor(keyPegColor);
-    ASSERT_EQ(result, 1);
+    ASSERT_EQ(result, codes::SUCCESS);
 }
 
 TEST(PegManagerTestSuite, SET_KEY_PEG_COLOR_INVALID) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "*";
     std::string keyPegPosition = "B";
     pegManager->setKeyPegPosition(keyPegPosition);
 
     int8_t result = pegManager->setKeyPegColor(keyPegColor);
-    ASSERT_EQ(result, -1);
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
-TEST(PegManagerTestSuite, SET_KEY_PEG_COLOR_TAKEN) {
+TEST(PegManagerTestSuite, SET_KEY_PEG_COLOR_DUPLICATE) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     std::string keyPegPosition = "W";
     pegManager->setKeyPegPosition(keyPegPosition);
 
     int8_t result = pegManager->setKeyPegColor(keyPegColor);
-    ASSERT_EQ(result, 0);
+    ASSERT_EQ(result, codes::DUPLICATE_DATA);
 }
 
 // setKeyPegPosition
 
 TEST(PegManagerTestSuite, SET_KEY_PEG_POSITION_SUCCESS) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     std::string keyPegPosition = "B";
     pegManager->setKeyPegColor(keyPegColor);
 
     int8_t result = pegManager->setKeyPegPosition(keyPegPosition);
-    ASSERT_EQ(result, 1);
+    ASSERT_EQ(result, codes::SUCCESS);
 }
 
 TEST(PegManagerTestSuite, SET_KEY_PEG_POSITION_INVALID) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     std::string keyPegPosition = "*";
     pegManager->setKeyPegColor(keyPegColor);
 
     int8_t result = pegManager->setKeyPegPosition(keyPegPosition);
-    ASSERT_EQ(result, -1);
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
-TEST(PegManagerTestSuite, SET_KEY_PEG_POSITION_TAKEN) {
+TEST(PegManagerTestSuite, SET_KEY_PEG_POSITION_DUPLICATE) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     std::string keyPegPosition = "W";
     pegManager->setKeyPegColor(keyPegColor);
 
     int8_t result = pegManager->setKeyPegPosition(keyPegPosition);
-    ASSERT_EQ(result, 0);
+    ASSERT_EQ(result, codes::DUPLICATE_DATA);
 }
 
 // replaceCodePeg
 
 TEST(PegManagerTestSuite, REPLACE_CODE_PEG_COLOR_SUCCESS) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
     pegManager->setCodePegs(colorSet);
 
     int8_t result = pegManager->replaceCodePeg("R",  "C");
-    ASSERT_EQ(result, 1);
+    ASSERT_EQ(result, codes::SUCCESS);
 }
 
 TEST(PegManagerTestSuite, REPLACE_CODE_PEG_COLOR_FAIL_OLD) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
     pegManager->setCodePegs(colorSet);
 
     int8_t result = pegManager->replaceCodePeg("Z",  "C");
-    ASSERT_EQ(result, -1);
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
 TEST(PegManagerTestSuite, REPLACE_CODE_PEG_COLOR_FAIL_NEW) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
     pegManager->setCodePegs(colorSet);
 
     int8_t result = pegManager->replaceCodePeg("R",  "Y");
-    ASSERT_EQ(result, 0);
+    ASSERT_EQ(result, codes::DUPLICATE_DATA);
+}
+
+TEST(PegManagerTestSuite, REPLACE_CODE_PEG_COLOR_FAIL_INVALID) {
+    // init
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
+    std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
+    pegManager->setCodePegs(colorSet);
+
+    int8_t result = pegManager->replaceCodePeg("R",  "*");
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }
 
 // getters
 
 TEST(PegManagerTestSuite, GET_CODE_PEGS) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::set<std::string> colorSet { "R", "O", "Y", "G", "B", "I"};
     pegManager->setCodePegs(colorSet);
 
@@ -176,7 +191,7 @@ TEST(PegManagerTestSuite, GET_CODE_PEGS) {
 
 TEST(PegManagerTestSuite, GET_KEY_COLOR) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegColor = "W";
     pegManager->setKeyPegColor(keyPegColor);
 
@@ -186,7 +201,7 @@ TEST(PegManagerTestSuite, GET_KEY_COLOR) {
 
 TEST(PegManagerTestSuite, GET_KEY_POSITION) {
     // init
-    IPegManager *pegManager = new PegManager();
+    std::unique_ptr<IPegManager> pegManager(new PegManager());
     std::string keyPegPosition = "B";
     pegManager->setKeyPegPosition(keyPegPosition);
 
@@ -198,7 +213,7 @@ TEST(PegManagerTestSuite, GET_KEY_POSITION) {
 
 TEST(SettingsManagerTestSuite, SET_MAX_TURNS) {
     // init
-    ISettingsManager *settingsManager = new SettingsManager();
+    std::unique_ptr<ISettingsManager> settingsManager(new SettingsManager());
     int8_t count = 8;
     settingsManager->setMaxTurns(count);
 
@@ -208,7 +223,7 @@ TEST(SettingsManagerTestSuite, SET_MAX_TURNS) {
 
 TEST(SettingsManagerTestSuite, SET_ALLOW_BLANKS) {
     // init
-    ISettingsManager *settingsManager = new SettingsManager();
+    std::unique_ptr<ISettingsManager> settingsManager(new SettingsManager());
     int8_t state = true;
     settingsManager->setAllowBlanks(state);
 
@@ -218,10 +233,30 @@ TEST(SettingsManagerTestSuite, SET_ALLOW_BLANKS) {
 
 TEST(SettingsManagerTestSuite, SET_ALLOW_DUPLICATES) {
     // init
-    ISettingsManager *settingsManager = new SettingsManager();
+    std::unique_ptr<ISettingsManager> settingsManager(new SettingsManager());
     int8_t state = true;
     settingsManager->setAllowDuplicates(state);
 
     bool result = state && settingsManager->getAllowDuplicates();
     ASSERT_EQ(result, true);
+}
+
+// ************************************ GameState ************************************
+
+TEST(GameStateTestSuite, SET_CODE_SUCCESS) {
+    // init
+    IGameState
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameStateTestSuite, SET_CODE_FAIL_SIZE) {
+    // init
+
+    ASSERT_EQ(result, codes::INVALID_SIZE);
+}
+
+TEST(GameStateTestSuite, SET_CODE_INVALID) {
+    // init
+
+    ASSERT_EQ(result, codes::INVALID_INPUT);
 }

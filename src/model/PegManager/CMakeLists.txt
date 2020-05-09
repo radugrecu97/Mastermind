@@ -11,6 +11,6 @@ target_include_directories(peg_manager
         include/
         )
 
-target_link_libraries(peg_manager PUBLIC peg_manager_api util)
+target_link_libraries(peg_manager PUBLIC peg_manager_api util constants)
 
 

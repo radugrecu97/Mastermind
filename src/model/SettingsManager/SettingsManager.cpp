@@ -3,22 +3,23 @@
 //
 
 #include <SettingsManager.h>
+#include <error_codes.h>
 
 SettingsManager::SettingsManager() = default;
 
-int8_t SettingsManager::setMaxTurns(int8_t count) {
+int8_t SettingsManager::setMaxTurns(uint8_t count) {
     this->maxTurns = count;
-    return 1;
+    return codes::SUCCESS;
 }
 
 int8_t SettingsManager::setAllowBlanks(bool state) {
     this->allowBlanks = state;
-    return 1;
+    return codes::SUCCESS;
 }
 
 int8_t SettingsManager::setAllowDuplicates(bool state) {
     this->allowDuplicates = state;
-    return 1;
+    return codes::SUCCESS;
 }
 
 int8_t SettingsManager::getMaxTurns() {
