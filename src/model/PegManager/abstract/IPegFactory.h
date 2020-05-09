@@ -1,8 +1,0 @@
-//
-// Created by radugrecu97 on 5/9/20.
-//
-
-#ifndef MASTERMIND_IPEGFACTORY_H
-#define MASTERMIND_IPEGFACTORY_H
-
-#endif //MASTERMIND_IPEGFACTORY_H

@@ -6,19 +6,22 @@
 #define MASTERMIND_PEGMANAGER_H
 
 #include <set>
-#include <IPeg.h>
+#include <IPegManager.h>
 
-class IPegManager {
+class PegManager: public IPegManager {
 private:
-    std::set<IPeg*> codePegs;
-    IPeg *keyPegColor;
-    IPeg *keyPegPosition;
+    std::set<std::string> codePegs;
+    std::string keyPegColor;
+    std::string keyPegPosition;
 public:
-    std::set<IPeg*> getCodePegs();
-    IPeg* getKeyPegColor();
-    IPeg* getKeyPegPosition();
-    uint8_t replaceCodePeg(std::string color);
-    uint8_t replaceKeyPeg(std::string color);
+    PegManager();
+    int8_t replaceCodePeg(std::string oldColor, std::string newColor) override;
+    int8_t setCodePegs(std::set<std::string> colorSet) override ;
+    int8_t setKeyPegColor(std::string color) override;
+    int8_t setKeyPegPosition(std::string color) override;
+    std::set<std::string> getCodePegs() override;
+    std::string getKeyPegColor() override;
+    std::string getKeyPegPosition() override;
 };
 
 #endif //MASTERMIND_PEGMANAGER_H

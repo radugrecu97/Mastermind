@@ -1,3 +1,3 @@
-#add_subdirectory(GameState)
+add_subdirectory(GameState)
 add_subdirectory(PegManager)
-#add_subdirectory(SettingsManager)
+add_subdirectory(SettingsManager)

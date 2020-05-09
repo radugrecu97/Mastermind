@@ -1,4 +1,4 @@
-add_subdirectory(abstract)
+add_subdirectory(api)
 
 set(SOURCE_FILES
         ViewDataFactory.cpp
