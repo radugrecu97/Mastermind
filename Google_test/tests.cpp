@@ -9,7 +9,7 @@
 #include <Util.h>
 #include <SettingsManager.h>
 #include <GameState.h>
-#include <error_codes.h>
+#include <status_codes.h>
 #include <GameManager.h>
 #include <string>
 #include <algorithm>

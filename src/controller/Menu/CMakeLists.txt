@@ -1,8 +1,15 @@
 add_subdirectory(api)
 
 set(SOURCE_FILES
-        Main.cpp
         FactoryMenu.cpp
+        Menu.cpp
+        Main.cpp
+        Settings.cpp
+        InputMaxTurns.cpp
+        InputBlanks.cpp
+        InputDuplicates.cpp
+        InputCodePegs.cpp
+        InputKeyPegs.cpp
         )
 
 add_library(menu STATIC ${SOURCE_FILES})

@@ -1,4 +1,4 @@
-//
+//std::string getDisplayText() = 0;
 // Created by radugrecu97 on 5/10/20.
 //
 
@@ -10,7 +10,8 @@
 
 class ICommand {
 public:
-    virtual int8_t execute(std::string data)  = 0;
+    virtual int8_t execute(std::string data) = 0;
+    virtual std::string getDisplayText() = 0;
 };
 
 #endif //MASTERMIND_ICOMMAND_H

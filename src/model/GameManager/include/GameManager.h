@@ -29,6 +29,7 @@ public:
     ISettingsManager* getSettingsManager() override;
     IGameState* getGameState() override;
     IPegManager* getPegManager() override;
+    int8_t changeSetting(uint8_t settingId, std::string value) override;
 };
 
 

@@ -1,8 +1,10 @@
 add_subdirectory(api)
 
 set(SOURCE_FILES
-        ChangeMenu.cpp
         FactoryCommand.cpp
+        ChangeMenu.cpp
+        ChangeSetting.cpp
+        Command.cpp
         )
 
 add_library(command STATIC ${SOURCE_FILES})

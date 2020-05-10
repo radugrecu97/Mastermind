@@ -5,9 +5,13 @@
 #include <PegManager.h>
 #include <Util.h>
 #include <bits/unique_ptr.h>
-#include <error_codes.h>
+#include <status_codes.h>
 
-PegManager::PegManager() = default;
+PegManager::PegManager() {
+    this->codePegs = { "R", "O", "Y", "G", "B", "I"};
+    this->keyPegPosition = 'B';
+    this->keyPegColor = 'W';
+};
 
 int8_t PegManager::replaceCodePeg(std::string oldColor, std::string newColor) {
 

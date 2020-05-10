@@ -24,6 +24,7 @@ public:
     virtual ISettingsManager* getSettingsManager() = 0;
     virtual IGameState* getGameState() = 0;
     virtual IPegManager* getPegManager() = 0;
+    virtual int8_t changeSetting(uint8_t settingId, std::string value) = 0;
 };
 
 #endif //MASTERMIND_IGAMEMANAGER_H

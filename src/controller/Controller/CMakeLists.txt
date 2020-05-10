@@ -11,5 +11,5 @@ target_include_directories(controller
         include/
         )
 
-target_link_libraries(controller LINK_PUBLIC controller_api game_state menu game_manager)
+target_link_libraries(controller LINK_PUBLIC controller_api game_state menu game_manager view)
 

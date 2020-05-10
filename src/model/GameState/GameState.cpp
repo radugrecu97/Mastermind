@@ -6,9 +6,14 @@
 #include <IUtil.h>
 #include <bits/unique_ptr.h>
 #include <Util.h>
-#include <error_codes.h>
+#include <status_codes.h>
 
-GameSate::GameSate() = default;
+GameSate::GameSate() {
+    this->code = "";
+    this->guess = "";
+    this->feedback = "";
+    this->turnCount = 0;
+};
 
 void GameSate::setCode(std::string codeStr) {
     this->code = codeStr;

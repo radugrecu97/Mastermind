@@ -3,9 +3,13 @@
 //
 
 #include <SettingsManager.h>
-#include <error_codes.h>
+#include <status_codes.h>
 
-SettingsManager::SettingsManager() = default;
+SettingsManager::SettingsManager() {
+    this->maxTurns = 8;
+    this->allowDuplicates = false;
+    this->allowBlanks = false;
+};
 
 int8_t SettingsManager::setMaxTurns(uint8_t count) {
     this->maxTurns = count;

@@ -11,7 +11,7 @@
 
 class IFactoryCommand {
 public:
-    virtual ICommand* createCommand(uint8_t commandId, uint8_t otherId, IController* controller) = 0;
+    virtual ICommand* createCommand(uint8_t commandId, uint8_t otherId, std::string displayText, IController *controller) = 0;
 };
 
 #endif //MASTERMIND_IFACTORYCOMMAND_H

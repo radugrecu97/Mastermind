@@ -9,7 +9,7 @@
 
 class FactoryCommand: public IFactoryCommand {
 public:
-    ICommand* createCommand(uint8_t commandId, uint8_t otherId, IController* controller) override;
+    ICommand* createCommand(uint8_t commandId, uint8_t otherId, std::string displayText, IController *controller) override;
 };
 
 #endif //MASTERMIND_FACTORYCOMMAND_H

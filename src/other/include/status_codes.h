@@ -2,8 +2,8 @@
 // Created by radugrecu97 on 5/9/20.
 //
 
-#ifndef MASTERMIND_ERROR_CODES_H
-#define MASTERMIND_ERROR_CODES_H
+#ifndef MASTERMIND_STATUS_CODES_H
+#define MASTERMIND_STATUS_CODES_H
 
 #include <cstdint>
 namespace codes {
@@ -16,4 +16,4 @@ namespace codes {
 
 
 
-#endif //MASTERMIND_ERROR_CODES_H
+#endif //MASTERMIND_STATUS_CODES_H

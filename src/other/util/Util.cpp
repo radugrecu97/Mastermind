@@ -3,7 +3,7 @@
 //
 
 #include <Util.h>
-#include <error_codes.h>
+#include <status_codes.h>
 #include <algorithm>
 
 int8_t Util::validateUpperLetters(std::string str) {

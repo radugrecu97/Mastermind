@@ -6,7 +6,8 @@
 #include <PegManager.h>
 #include <GameState.h>
 #include <SettingsManager.h>
-#include <error_codes.h>
+#include <status_codes.h>
+#include <setting_ids.h>
 #include <Util.h>
 
 #include <memory>
@@ -17,7 +18,7 @@ GameManager::GameManager() {
     this->pegManager->setKeyPegPosition("B");
     this->pegManager->setKeyPegColor("W");
     this->gameState = std::make_unique<GameSate>();
-    this->settingsManager.reset(new SettingsManager());
+    this->settingsManager = std::make_unique<SettingsManager>();
 }
 
 
@@ -165,7 +166,6 @@ int8_t GameManager::validateInput(std::string str) {
             return codes::INVALID_INPUT;
     }
 
-
     if (!this->getSettingsManager()->getAllowDuplicates())
         // check if all pegs are unique
         if (util->countUniqueCharacters(str) != size)
@@ -184,6 +184,64 @@ IGameState *GameManager::getGameState() {
 
 IPegManager *GameManager::getPegManager() {
     return this->pegManager.get();
+}
+
+int8_t GameManager::changeSetting(uint8_t settingId, std::string value) {
+    std::unique_ptr<IUtil> util = std::make_unique<Util>();
+    int8_t statusCode;
+    switch (settingId) {
+
+        case (setting_ids::MAX_TURNS):
+            statusCode = util->validateNumbers(value);
+            if (statusCode == codes::SUCCESS)
+                this->settingsManager->setMaxTurns(std::stoi(value));
+            return statusCode;
+
+        case (setting_ids::BLANKS):
+            if (value == "y") {
+                this->settingsManager->setAllowBlanks(true);
+            } else if (value == "n") {
+                this->settingsManager->setAllowBlanks((false));
+            } else {
+                return codes::INVALID_INPUT;
+            }
+            return codes::SUCCESS;
+
+        case (setting_ids::DUPLICATES):
+            if (value == "y") {
+                this->settingsManager->setAllowDuplicates(true);
+            } else if (value == "n") {
+                this->settingsManager->setAllowDuplicates((false));
+            } else {
+                return codes::INVALID_INPUT;
+            }
+            return codes::SUCCESS;
+
+        case (setting_ids::CODE_PEG_COLOR):
+            if (util->validateUpperLetters(value) == codes::SUCCESS)
+                if (util->countUniqueCharacters(value) == 6) {
+                    std::set<std::string> colorSet;
+                    std::string s;
+                    for (auto c : value) {
+                        colorSet.insert(std::string(1, c));
+                    }
+                    this->pegManager->setCodePegs(colorSet);
+                    return codes::SUCCESS;
+                }
+            return codes::INVALID_INPUT;
+
+        case (setting_ids::KEY_PEG_COLOR):
+            if (util->validateUpperLetters(value) == codes::SUCCESS)
+                if (util->countUniqueCharacters(value) == 2) {
+                    this->pegManager->setKeyPegColor(std::string(1, value[0]));
+                    this->pegManager->setKeyPegPosition(std::string(1, value[1]));
+                    return codes::SUCCESS;
+                }
+            return codes::INVALID_INPUT;
+        default:
+            break;
+    }
+    return 0;
 }
 
 

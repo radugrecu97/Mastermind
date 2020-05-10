@@ -5,23 +5,15 @@
 #ifndef MASTERMIND_MAIN_H
 #define MASTERMIND_MAIN_H
 
-#include <IMenu.h>
+#include <Menu.h>
 #include <bits/unique_ptr.h>
 #include <IController.h>
 
 namespace menu {
 
-    class Main : public IMenu {
-    private:
-        uint8_t menuId;
-        std::vector<std::unique_ptr<ICommand>> commands;
-        IController* controller;
+    class Main : public Menu {
     public:
-        explicit Main(IController* controller);
-        int8_t addCommand(uint8_t commandId, uint8_t otherId) override;
-        int8_t runCommand(ICommand* command, std::string data) override;
-        uint8_t getMenuId() override;
-        const std::vector<std::unique_ptr<ICommand>>& getCommands() override;
+        Main(IController *controller);
     };
 
 }
