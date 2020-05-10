@@ -7,4 +7,4 @@ set(SOURCE_FILES main.cpp)
 
 add_executable(Mastermind ${SOURCE_FILES})
 
-target_link_libraries(Mastermind LINK_PUBLIC peg_manager)
+target_link_libraries(Mastermind LINK_PUBLIC game_manager)

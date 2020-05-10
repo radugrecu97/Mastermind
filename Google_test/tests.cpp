@@ -5,16 +5,14 @@
 //
 
 #include "gtest/gtest.h"
-#include <IPegManager.h>
 #include <PegManager.h>
-#include <IUtil.h>
 #include <Util.h>
-#include <ISettingsManager.h>
 #include <SettingsManager.h>
-#include <IGameState.h>
 #include <GameState.h>
 #include <error_codes.h>
-
+#include <GameManager.h>
+#include <string>
+#include <algorithm>
 // ************************************ Util ************************************
 
 // validateUpperLetters
@@ -241,22 +239,123 @@ TEST(SettingsManagerTestSuite, SET_ALLOW_DUPLICATES) {
     ASSERT_EQ(result, true);
 }
 
-// ************************************ GameState ************************************
+// ************************************ GameManager ************************************
 
-TEST(GameStateTestSuite, SET_CODE_SUCCESS) {
+TEST(GameManagerTestSuite, SET_CODE_SUCCESS) {
     // init
-    IGameState
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    int8_t result = gameManager->setCode("ABCD");
     ASSERT_EQ(result, codes::SUCCESS);
 }
 
-TEST(GameStateTestSuite, SET_CODE_FAIL_SIZE) {
+TEST(GameManagerTestSuite, SET_CODE_SUCCESS_DUPLICATES) {
     // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowDuplicates(true);
+    int8_t result = gameManager->setCode("ABCC");
+    ASSERT_EQ(result, codes::SUCCESS);
+}
 
+TEST(GameManagerTestSuite, SET_CODE_SUCCESS_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowBlanks(true);
+    int8_t result = gameManager->setCode("ABC*");
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameManagerTestSuite, SET_CODE_SUCCESS_DUPLICATES_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowDuplicates(true);
+    gameManager->getSettingsManager()->setAllowBlanks(true);
+    int8_t result = gameManager->setCode("ABB*");
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameManagerTestSuite, SET_CODE_FAILURE_SIZE) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    int8_t result = gameManager->setCode("ABC");
     ASSERT_EQ(result, codes::INVALID_SIZE);
 }
 
-TEST(GameStateTestSuite, SET_CODE_INVALID) {
+TEST(GameManagerTestSuite, SET_CODE_FAILURE_INVALID) {
     // init
-
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    int8_t result = gameManager->setCode("1234");
     ASSERT_EQ(result, codes::INVALID_INPUT);
+}
+
+TEST(GameManagerTestSuite, SET_CODE_FAILURE_DUPLICATES) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowDuplicates(false);
+    int8_t result = gameManager->setCode("ABCC");
+    ASSERT_EQ(result, codes::DUPLICATE_DATA);
+}
+
+TEST(GameManagerTestSuite, SET_CODE_FAILURE_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowBlanks(false);
+    int8_t result = gameManager->setCode("ABC*");
+    ASSERT_EQ(result, codes::INVALID_INPUT);
+}
+
+TEST(GameManagerTestSuite, SET_CODE_FAILURE_DUPLICATES_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    gameManager->getSettingsManager()->setAllowDuplicates(false);
+    gameManager->getSettingsManager()->setAllowBlanks(false);
+    int8_t result = gameManager->setCode("ABB*");
+    ASSERT_EQ(result, codes::INVALID_INPUT);
+}
+
+TEST(GameManagerTestSuite, MAKE_GUESS_SUCCESS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    std::string seq = "ABCD";
+    gameManager->setCode(seq);
+    gameManager->setGuess(seq);
+    int8_t result = gameManager->makeGuess();
+
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameManagerTestSuite, MAKE_GUESS_SUCCESS_DUPLICATES) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    std::string seq = "ABCC";
+    gameManager->getSettingsManager()->setAllowDuplicates(true);
+    gameManager->setCode(seq);
+    gameManager->setGuess(seq);
+    int8_t result = gameManager->makeGuess();
+
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameManagerTestSuite, MAKE_GUESS_SUCCESS_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    std::string seq = "ABC*";
+    gameManager->getSettingsManager()->setAllowBlanks(true);
+    gameManager->setCode(seq);
+    gameManager->setGuess(seq);
+    int8_t result = gameManager->makeGuess();
+
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+TEST(GameManagerTestSuite, MAKE_GUESS_SUCCESS_DUPLICATES_BLANKS) {
+    // init
+    std::unique_ptr<IGameManager> gameManager(new GameManager());
+    std::string seq = "ABB*";
+    gameManager->getSettingsManager()->setAllowBlanks(true);
+    gameManager->getSettingsManager()->setAllowDuplicates(true);
+    gameManager->setCode(seq);
+    gameManager->setGuess(seq);
+    int8_t result = gameManager->makeGuess();
+
+    ASSERT_EQ(result, codes::SUCCESS);
 }

@@ -12,6 +12,6 @@ target_include_directories(util
         include/
         )
 
-target_link_libraries(util PUBLIC util_api)
+target_link_libraries(util PUBLIC util_api constants)
 
 

@@ -11,6 +11,8 @@ class IUtil {
 public:
     //setToString
     virtual int8_t validateUpperLetters(std::string str) = 0;
+    virtual int8_t validateUpperLettersAndStar(std::string str) = 0;
+    virtual int countUniqueCharacters(std::string str) = 0;
 };
 
 #endif //MASTERMIND_IUTIL_H

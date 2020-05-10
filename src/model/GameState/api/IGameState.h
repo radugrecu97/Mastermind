@@ -10,21 +10,14 @@
 
 class IGameState {
 public:
-    virtual void nextTurn() = 0;
-    virtual int8_t setCode(std::string codeStr) = 0;
-    virtual int8_t setGuess(std::string guessStr) = 0;
-    virtual int8_t setFeedback(std::string feedbackStr) = 0;
-    virtual int8_t setTurnCount(int8_t count) = 0;
-    virtual void setMaxTurns(int8_t count) = 0;
-    virtual void setAllowBlanks(bool state) = 0;
-    virtual void setAllowDuplicates(bool state) = 0;
+    virtual void setCode(std::string codeStr) = 0;
+    virtual void setGuess(std::string guessStr) = 0;
+    virtual void setFeedback(std::string feedbackStr) = 0;
+    virtual void setTurnCount(int8_t count) = 0;
     virtual std::string getCode() = 0;
     virtual std::string getGuess() = 0;
     virtual std::string getFeedback() = 0;
     virtual int8_t getTurnCount() = 0;
-    virtual int8_t getMaxTurns() = 0;
-    virtual bool getAllowBlanks() = 0;
-    virtual bool getAllowDuplicates() = 0;
 };
 
 #endif //MASTERMIND_IGAMESTATE_H

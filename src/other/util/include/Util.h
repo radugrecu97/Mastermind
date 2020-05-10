@@ -11,6 +11,8 @@ class Util: public IUtil {
 public:
     //setToString
     int8_t validateUpperLetters(std::string str) override;
+    int8_t validateUpperLettersAndStar(std::string str) override;
+    int countUniqueCharacters(std::string str) override;
 };
 
 #endif //MASTERMIND_UTIL_H
