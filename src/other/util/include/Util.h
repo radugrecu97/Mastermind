@@ -13,6 +13,7 @@ public:
     int8_t validateUpperLetters(std::string str) override;
     int8_t validateUpperLettersAndStar(std::string str) override;
     int countUniqueCharacters(std::string str) override;
+    int8_t validateNumbers(std::string str) override;
 };
 
 #endif //MASTERMIND_UTIL_H

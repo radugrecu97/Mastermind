@@ -13,6 +13,7 @@
 #include <GameManager.h>
 #include <string>
 #include <algorithm>
+#include <Controller.h>
 // ************************************ Util ************************************
 
 // validateUpperLetters
@@ -356,6 +357,17 @@ TEST(GameManagerTestSuite, MAKE_GUESS_SUCCESS_DUPLICATES_BLANKS) {
     gameManager->setCode(seq);
     gameManager->setGuess(seq);
     int8_t result = gameManager->makeGuess();
+
+    ASSERT_EQ(result, codes::SUCCESS);
+}
+
+// ************************************ Controller ************************************
+
+TEST(CommandTestSuite, COMMAND_CHANGE_MENU_INPUT_SUCCESS) {
+    // init
+    std::unique_ptr<IController> controller(new Controller());
+    controller->setMenu("input", "blanks", controller);
+
 
     ASSERT_EQ(result, codes::SUCCESS);
 }

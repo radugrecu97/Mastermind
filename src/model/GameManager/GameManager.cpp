@@ -9,12 +9,14 @@
 #include <error_codes.h>
 #include <Util.h>
 
+#include <memory>
+
 GameManager::GameManager() {
-    this->pegManager.reset(new PegManager());
+    this->pegManager = std::make_unique<PegManager>();
     this->pegManager->setCodePegs({ "R", "O", "Y", "G", "B", "I"});
     this->pegManager->setKeyPegPosition("B");
     this->pegManager->setKeyPegColor("W");
-    this->gameState.reset(new GameSate());
+    this->gameState = std::make_unique<GameSate>();
     this->settingsManager.reset(new SettingsManager());
 }
 

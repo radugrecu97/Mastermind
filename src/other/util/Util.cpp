@@ -8,7 +8,7 @@
 
 int8_t Util::validateUpperLetters(std::string str) {
     for(char c : str) {
-        if ((c < 65) || (c > 90)) {
+        if ((c < 'A') || (c > 'Z')) {
             return codes::INVALID_INPUT;
         }
     }
@@ -35,4 +35,13 @@ int Util::countUniqueCharacters(std::string str)
     // Note that "?" is an unknown character, not an actual question mark
     return i - str.begin();
     // returns 6
+}
+
+int8_t Util::validateNumbers(std::string str) {
+    for(char c : str) {
+        if ((c < '0') || (c > '9')) {
+            return codes::INVALID_INPUT;
+        }
+    }
+    return codes::SUCCESS;
 }
