@@ -13,9 +13,10 @@ private:
     std::string guess;
     std::string feedback;
     uint8_t turnCount{};
-    uint8_t maxTurns{};
-    bool allowBlanks{};
-    bool allowDuplicates{};
+//    uint8_t maxTurns{};
+//    bool allowBlanks{};
+//    bool allowDuplicates{};
+    std::vector<std::string> guessHistory;
 public:
     GameSate();
     void setCode(std::string codeStr) override;
@@ -26,6 +27,9 @@ public:
     std::string getGuess() override;
     std::string getFeedback() override;
     int8_t getTurnCount() override;
+    void appendHistory(std::string) override;
+    void clearHistory() override;
+    std::vector<std::string> getHistory() override;
 };
 
 #endif //MASTERMIND_GAMESTATE_H

@@ -18,6 +18,9 @@ public:
     virtual std::string getGuess() = 0;
     virtual std::string getFeedback() = 0;
     virtual int8_t getTurnCount() = 0;
+    virtual void appendHistory(std::string) = 0;
+    virtual void clearHistory() = 0;
+    virtual std::vector<std::string> getHistory() = 0;
 };
 
 #endif //MASTERMIND_IGAMESTATE_H

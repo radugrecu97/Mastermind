@@ -17,8 +17,13 @@ GameManager::GameManager() {
     this->pegManager->setCodePegs({ "R", "O", "Y", "G", "B", "I"});
     this->pegManager->setKeyPegPosition("B");
     this->pegManager->setKeyPegColor("W");
-    this->gameState = std::make_unique<GameSate>();
     this->settingsManager = std::make_unique<SettingsManager>();
+    this->gameState = std::make_unique<GameSate>();
+    this->gameState->setCode(this->generateCode());
+    this->gameState->setGuess("");
+    this->gameState->setFeedback("");
+    this->gameState->setTurnCount(0);
+    this->gameState->clearHistory();
 }
 
 
@@ -27,6 +32,7 @@ void GameManager::resetGame() {
     this->gameState->setGuess("");
     this->gameState->setFeedback("");
     this->gameState->setTurnCount(0);
+    this->gameState->clearHistory();
 }
 
 template<typename S>
@@ -113,12 +119,14 @@ std::string GameManager::generateFeedback() {
 
 int8_t GameManager::makeGuess() {
     this->generateFeedback();
-
+    this->gameState->setTurnCount(this->gameState->getTurnCount() + 1);
+    this->gameState->appendHistory(this->gameState->getGuess() + "     " + this->gameState->getFeedback());
     if (this->gameState->getGuess() == this->gameState->getCode())
         return codes::SUCCESS;
-    else {
+    else if (this->gameState->getTurnCount() > this->settingsManager->getMaxTurns()){
         return codes::FAILURE;
     }
+    return codes::NEUTRAL;
 }
 
 int8_t GameManager::replaceCodePeg(std::string oldColor, std::string newColor) {
@@ -170,6 +178,12 @@ int8_t GameManager::validateInput(std::string str) {
         // check if all pegs are unique
         if (util->countUniqueCharacters(str) != size)
             return codes::DUPLICATE_DATA;
+
+    std::set<std::string> codePegs = this->pegManager->getCodePegs();
+    for ( auto c : str) {
+        if (codePegs.find(std::string(1, c)) == codePegs.end())
+            return codes::INVALID_INPUT;
+    }
 
     return codes::SUCCESS;
 }

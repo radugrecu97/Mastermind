@@ -11,6 +11,10 @@
 #include <InputDuplicates.h>
 #include <InputCodePegs.h>
 #include <InputKeyPegs.h>
+#include <InputCode.h>
+#include <Game.h>
+#include <Victory.h>
+#include <Loss.h>
 
 FactoryMenu::FactoryMenu() = default;
 
@@ -30,8 +34,14 @@ IMenu* FactoryMenu::createMenu(uint8_t commandId, uint8_t otherId, IController *
             return new menu::InputCodePegs(controller);
         case (menu_ids::INPUT_KEY_PEGS):
             return new menu::InputKeyPegs(controller);
+        case (menu_ids::INPUT_CODE):
+            return new menu::InputCode(controller);
+        case (menu_ids::VICTORY):
+            return new menu::Victory(controller);
+        case (menu_ids::LOSS):
+            return new menu::Loss(controller);
         case (menu_ids::GAME):
-
+            return new menu::Game(controller);
         default:
             return nullptr;
     }

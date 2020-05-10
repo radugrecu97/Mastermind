@@ -17,6 +17,8 @@ namespace menu {
         this->addCommand(command_ids::CHANGE_MENU, menu_ids::INPUT_DUPLICATES, "[ALLOW DUPLICATES]");
         this->addCommand(command_ids::CHANGE_MENU, menu_ids::INPUT_CODE_PEGS, "[CODE PEG COLORS]");
         this->addCommand(command_ids::CHANGE_MENU, menu_ids::INPUT_KEY_PEGS, "[KEY PEG COLORS]");
+        this->addCommand(command_ids::CHANGE_MENU, menu_ids::INPUT_CODE, "[CHANGE CODE]");
+        this->addCommand(command_ids::CHANGE_MENU, menu_ids::MAIN_MENU, "[BACK]");
     }
 
 }

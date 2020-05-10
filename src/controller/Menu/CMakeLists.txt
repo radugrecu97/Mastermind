@@ -10,6 +10,10 @@ set(SOURCE_FILES
         InputDuplicates.cpp
         InputCodePegs.cpp
         InputKeyPegs.cpp
+        InputCode.cpp
+        Game.cpp
+        Victory.cpp
+        Loss.cpp
         )
 
 add_library(menu STATIC ${SOURCE_FILES})

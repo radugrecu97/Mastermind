@@ -15,7 +15,7 @@ menu::InputCodePegs::InputCodePegs(IController *controller) : Menu(controller) {
         settingValue.append(c);
     }
 
-    std::string displayText = "[CODE PEG COLORS]\nCURRENT VALUE:" + settingValue + "\nVALID VALUES: [ 6 letter long uppercase, unique sequence - ABCDEF ]";
+    std::string displayText = "[CODE PEG COLORS]\nCURRENT VALUE:" + settingValue + "\nVALID VALUES: [ 6 letter-long, uppercase, unique sequence - ABCDEF ]";
     this->addCommand(command_ids::CHANGE_SETTING, setting_ids::CODE_PEG_COLOR, displayText);
 }
 

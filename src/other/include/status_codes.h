@@ -8,6 +8,7 @@
 #include <cstdint>
 namespace codes {
     const int8_t SUCCESS = 1;
+    const int8_t NEUTRAL = 0;
     const int8_t FAILURE = -1;
     const int8_t INVALID_INPUT = -2;
     const int8_t DUPLICATE_DATA = -3;

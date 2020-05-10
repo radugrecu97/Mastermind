@@ -4,6 +4,9 @@ set(SOURCE_FILES
         FactoryFrame.cpp
         Main.cpp
         Settings.cpp
+        Game.cpp
+        Victory.cpp
+        Loss.cpp
         )
 
 add_library(frame STATIC ${SOURCE_FILES})

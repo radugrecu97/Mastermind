@@ -5,6 +5,8 @@ set(SOURCE_FILES
         ChangeMenu.cpp
         ChangeSetting.cpp
         Command.cpp
+        MakeGuess.cpp
+        ChangeCode.cpp
         )
 
 add_library(command STATIC ${SOURCE_FILES})

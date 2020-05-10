@@ -4,8 +4,6 @@
 
 #include <GameState.h>
 #include <IUtil.h>
-#include <bits/unique_ptr.h>
-#include <Util.h>
 #include <status_codes.h>
 
 GameSate::GameSate() {
@@ -46,6 +44,21 @@ std::string GameSate::getFeedback() {
 int8_t GameSate::getTurnCount() {
     return this->turnCount;
 }
+
+void GameSate::appendHistory(std::string guess) {
+    this->guessHistory.push_back(guess);
+}
+
+void GameSate::clearHistory() {
+    this->guessHistory.clear();
+}
+
+std::vector<std::string> GameSate::getHistory() {
+    return this->guessHistory;
+}
+
+
+
 
 
 

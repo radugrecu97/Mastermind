@@ -22,8 +22,8 @@ Controller::Controller() {
 int8_t Controller::handleInput(std::string input) {
     int8_t statusCode;
     if (this->pendingInput) {
-        statusCode = this->menu->runCommand(this->menu->getCommands()[0].get(), input);
         pendingInput = false;
+        statusCode = this->menu->runCommand(this->menu->getCommands()[0].get(), input);
     } else {
         std::unique_ptr<IUtil> util = std::make_unique<Util>();
         if (util->validateNumbers(input) == codes::SUCCESS) {

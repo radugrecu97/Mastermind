@@ -12,6 +12,7 @@ namespace command_ids {
     const uint8_t CHANGE_SETTING = 2;
     const uint8_t QUIT = 3;
     const uint8_t MAKE_GUESS = 4;
+    const uint8_t CHANGE_CODE = 5;
 }
 
 #endif //MASTERMIND_COMMAND_IDS_H

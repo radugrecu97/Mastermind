@@ -13,6 +13,7 @@ namespace setting_ids {
     const uint8_t DUPLICATES = 3;
     const uint8_t CODE_PEG_COLOR = 4;
     const uint8_t KEY_PEG_COLOR = 5;
+    const uint8_t CODE = 6;
 }
 
 #endif //MASTERMIND_SETTING_IDS_H
